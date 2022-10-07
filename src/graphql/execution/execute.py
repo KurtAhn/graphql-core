@@ -1,3 +1,4 @@
+import logging
 from asyncio import ensure_future, gather
 from collections.abc import Mapping
 from inspect import isawaitable
@@ -62,6 +63,9 @@ from ..type import (
 from .collect_fields import collect_fields, collect_sub_fields
 from .middleware import MiddlewareManager
 from .values import get_argument_values, get_variable_values
+
+
+logger = logging.getLogger("graphql." + __name__)
 
 __all__ = [
     "assert_valid_execution_arguments",
@@ -994,6 +998,7 @@ def execute(
 
     # If a valid execution context cannot be created due to incorrect arguments,
     # a "Response" with only errors is returned.
+    logger.info("build context")
     exe_context = execution_context_class.build(
         schema,
         document,
@@ -1010,6 +1015,7 @@ def execute(
 
     # Return early errors if execution context failed.
     if isinstance(exe_context, list):
+        logger.info("execute error")
         return ExecutionResult(data=None, errors=exe_context)
 
     # Return a possible coroutine object that will eventually yield the data described
@@ -1033,16 +1039,18 @@ def execute(
             # noinspection PyShadowingNames
             async def await_result() -> Any:
                 try:
+                    logger.info("build response")
                     return build_response(await result, errors)  # type: ignore
                 except GraphQLError as error:
                     errors.append(error)
                     return build_response(None, errors)
-
+            logger.info("await result")
             return await_result()
     except GraphQLError as error:
         errors.append(error)
         return build_response(None, errors)
     else:
+        logger.info("ignore")
         return build_response(result, errors)  # type: ignore
 
 
