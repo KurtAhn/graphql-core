@@ -1012,6 +1012,7 @@ def execute(
         middleware,
         is_awaitable,
     )
+    logger.info("end build context")
 
     # Return early errors if execution context failed.
     if isinstance(exe_context, list):
