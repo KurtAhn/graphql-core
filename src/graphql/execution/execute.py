@@ -65,7 +65,7 @@ from .middleware import MiddlewareManager
 from .values import get_argument_values, get_variable_values
 
 
-logger = logging.getLogger("graphql." + __name__)
+logger = logging.getLogger("graphql-core." + __name__)
 
 __all__ = [
     "assert_valid_execution_arguments",
