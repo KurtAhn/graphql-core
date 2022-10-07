@@ -1034,7 +1034,9 @@ def execute(
     build_response = exe_context.build_response
     try:
         operation = exe_context.operation
+        logger.info("execute operation")
         result = exe_context.execute_operation(operation, root_value)
+        logger.info("end execute operation")
 
         if exe_context.is_awaitable(result):
             # noinspection PyShadowingNames
