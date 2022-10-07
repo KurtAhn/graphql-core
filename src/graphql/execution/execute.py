@@ -501,6 +501,8 @@ class ExecutionContext:
         calling its resolve function, then calls complete_value to await coroutine
         objects, serialize scalars, or execute the sub-selection-set for objects.
         """
+        logger.info(f"execute field {path}")
+
         field_def = get_field_def(self.schema, parent_type, field_nodes[0])
         if not field_def:
             return Undefined
@@ -522,7 +524,9 @@ class ExecutionContext:
 
             # Note that contrary to the JavaScript implementation, we pass the context
             # value as part of the resolve info.
+            logger.info("resolve")
             result = resolve_fn(source, info, **args)
+            logger.info("end resolve")
 
             if self.is_awaitable(result):
                 # noinspection PyShadowingNames
