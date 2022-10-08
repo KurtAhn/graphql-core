@@ -526,7 +526,7 @@ class ExecutionContext:
             # value as part of the resolve info.
             logger.info("resolve")
             result = resolve_fn(source, info, **args)
-            logger.info("end resolve")
+            logger.info(result)
 
             if self.is_awaitable(result):
                 # noinspection PyShadowingNames
