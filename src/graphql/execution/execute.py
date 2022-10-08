@@ -524,7 +524,6 @@ class ExecutionContext:
 
             # Note that contrary to the JavaScript implementation, we pass the context
             # value as part of the resolve info.
-            logger.info("resolve")
             result = resolve_fn(source, info, **args)
             logger.info(result)
 
