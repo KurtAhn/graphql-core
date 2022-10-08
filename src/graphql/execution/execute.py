@@ -501,7 +501,7 @@ class ExecutionContext:
         calling its resolve function, then calls complete_value to await coroutine
         objects, serialize scalars, or execute the sub-selection-set for objects.
         """
-        logger.info(f"execute field {path}")
+        logger.info(f"execute field {path.key}, {path.typename}")
 
         field_def = get_field_def(self.schema, parent_type, field_nodes[0])
         if not field_def:
